@@ -81,7 +81,11 @@ function create () {
         console.log('grassHit.body.collideCallback() e: ', e);
     };
 
-    bagel = game.add.sprite(32, game.world.height - 150, 'bagel');
+    var bagelStart = {};
+    bagelStart.x = 32;
+    bagelStart.y = game.world.height / 2 - 64;
+
+    bagel = game.add.sprite(bagelStart.x, bagelStart.y, 'bagel');
     bagel.scale.x = 1.75;
     bagel.scale.y = 1.75;
     bagel.animations.add('spin', [2, 3], 6, true);

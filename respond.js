@@ -33,6 +33,9 @@ function respond(game) {
 
         fillCanvas(background);
 
+        game.camera.width = width;
+        game.camera.height = height;
+
     }
 
     //Initial call

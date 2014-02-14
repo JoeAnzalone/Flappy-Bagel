@@ -17,6 +17,7 @@ function preload () {
 }
 
 var background;
+var xSpacing = 275; // Horizontal space between breadsticks
 function create () {
     respond(game);
 
@@ -28,20 +29,23 @@ function create () {
     fillCanvas(background);
 
     breadsticks = game.add.group();
-    for (var i = 0; i < 100; i++) {
-        //  Create a breadstick inside of the 'breadsticks' group
-        i += 1;
+    for (var i = 0; i < 10; i++) {
 
-        if (Math.random()<.5) {
-            var yPos = -300;
-        } else {
-            var yPos = game.world.height - 150;
-        }
+        // Vertical space between breadsticks
+        var ySpacing = 100;
 
-        var breadstick = breadsticks.create(i * 150, yPos, 'breadstick');
-        breadstick.body.immovable = true;
+        var xPos = game.world.width + (i+1) * xSpacing;
+        var yPos = (game.world.height / 2) - 650;
 
-        breadstick.body.setPolygon([
+        yPos = yPos + (Math.random() * (100 - -200) + -200);
+
+        var topBreadstick = breadsticks.create(xPos, yPos, 'breadstick');
+        var bottomBreadstick = breadsticks.create(xPos, topBreadstick.y + ySpacing + topBreadstick.height, 'breadstick');
+
+        topBreadstick.body.immovable = true;
+        bottomBreadstick.body.immovable = true;
+
+        var breadstickPolygon = [
             37, 20,
             58, 10,
             76, 17,
@@ -53,7 +57,10 @@ function create () {
             22, 528,
             17, 482,
             16, 90
-        ]);
+        ];
+
+        topBreadstick.body.setPolygon(breadstickPolygon);
+        bottomBreadstick.body.setPolygon(breadstickPolygon);
     }
 
     grassHit = game.add.sprite(0, game.world.height - 32);
@@ -131,6 +138,13 @@ function update() {
     if (bagel.y > game.world.height) {
         bagel.die();
     }
+
+    breadsticks.forEach(function(breadstick){
+        if (breadstick.x + breadstick.width < game.camera.x) {
+            // breadstick.x = game.camera.x + game.world.width + (i+1) * xSpacing;
+            breadstick.x = game.camera.x + (breadsticks.length/2) * xSpacing;
+        }
+    }, this);
 
 }
 

@@ -81,31 +81,16 @@ function create () {
         console.log('grassHit.body.collideCallback() e: ', e);
     };
 
-    var bagelStart = {};
-    bagelStart.x = 32;
-    bagelStart.y = game.world.height / 2 - 64;
-
-    bagel = game.add.sprite(bagelStart.x, bagelStart.y, 'bagel');
-    bagel.scale.x = 1.75;
-    bagel.scale.y = 1.75;
-    bagel.animations.add('spin', [2, 3], 6, true);
-    bagel.animations.play('spin');
-    bagel.body.gravity.y = 1200;
-
-    bagel.die = function() {
-        // alert('Ya got killed! Nice!');
-
-        if (bagel.dead) {
-            return false;
-        }
-        bagel.dead = true;
-        bagel.animations.stop('spin');
-        bagel.body.velocity.y = 0;
-        bagel.body.gravity.y = 200;
-        bagel.frame = 0;
-    };
+    createBagel();
 
     game.input.onDown.add(function(){
+        if (gameOverText.visible) {
+            game.camera.x = 0;
+            gameOverText.visible = false;
+            bagel.destroy();
+            createBagel();
+        }
+
         if (!bagel.dead) {
             bagel.body.velocity.y = -400;
         }
@@ -117,6 +102,10 @@ function create () {
         }
     });
 
+    gameOverText = game.add.text(game.camera.width/2, game.camera.height/2, 'You got killed!\nClick wherever to restart', {align: 'center'});
+    gameOverText.visible = false;
+    gameOverText.anchor.setTo(0.5, 0.5);
+    gameOverText.fixedToCamera = true;
 }
 
 function update() {
@@ -150,6 +139,34 @@ function update() {
         }
     }, this);
 
+}
+
+function createBagel() {
+    var bagelStart = {};
+    bagelStart.x = 32;
+    bagelStart.y = game.world.height / 2 - 64;
+
+    bagel = game.add.sprite(bagelStart.x, bagelStart.y, 'bagel');
+    bagel.scale.x = 1.75;
+    bagel.scale.y = 1.75;
+    bagel.animations.add('spin', [2, 3], 6, true);
+    bagel.animations.play('spin');
+    bagel.body.gravity.y = 1200;
+    bagel.dead = false;
+
+    bagel.die = function() {
+    if (bagel.dead) {
+        return false;
+    }
+    bagel.dead = true;
+    bagel.animations.stop('spin');
+    bagel.body.velocity.y = 0;
+    bagel.body.gravity.y = 200;
+    bagel.frame = 0;
+
+    gameOverText.visible = true;
+
+};
 }
 
 function fillCanvas(object) {

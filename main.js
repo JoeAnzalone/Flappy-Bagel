@@ -12,7 +12,7 @@ function preload () {
     game.load.image('background', 'assets/background.png');
 
     // Kenney/Platformer Pack/Tiles/grassHalfMid.png
-    game.load.image('grass', 'assets/grass.gif');
+    game.load.image('grass', 'assets/grass.png');
 
 }
 

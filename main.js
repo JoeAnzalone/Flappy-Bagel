@@ -125,6 +125,7 @@ function update() {
     if (!bagel.dead) {
         game.camera.x += 5;
         bagel.x += 5;
+        grassSprite.tilePosition.x += -5;
     }
 
     if (bagel.y > game.world.height) {

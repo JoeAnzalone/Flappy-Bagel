@@ -91,13 +91,13 @@ function create () {
             createBagel();
         }
 
-        if (!bagel.dead) {
+        if (!bagel.dead && bagel.y > game.camera.y) {
             bagel.body.velocity.y = -400;
         }
     }, this);
 
     game.input.keyboard.addCallbacks(this, function(){
-        if (!bagel.dead) {
+        if (!bagel.dead && bagel.y > game.camera.y) {
             bagel.body.velocity.y = -400;
         }
     });
@@ -149,6 +149,7 @@ function createBagel() {
     bagel = game.add.sprite(bagelStart.x, bagelStart.y, 'bagel');
     bagel.scale.x = 1.75;
     bagel.scale.y = 1.75;
+    bagel.anchor.setTo(0.5, 0.5);
     bagel.animations.add('spin', [2, 3], 6, true);
     bagel.animations.play('spin');
     bagel.body.gravity.y = 1200;

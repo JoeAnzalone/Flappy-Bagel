@@ -16,13 +16,16 @@ function preload () {
 
 }
 
+var background;
 function create () {
+    respond(game);
+
     game.camera.bounds = false;
 
-    background = game.add.sprite(-12, 0, 'background');
+    background = game.add.sprite(0, 0, 'background');
     background.fixedToCamera = true;
-    background.scale.x = 1.75;
-    background.scale.y = 1.75;
+
+    fillCanvas(background);
 
     breadsticks = game.add.group();
     for (var i = 0; i < 100; i++) {
@@ -128,6 +131,20 @@ function update() {
         bagel.die();
     }
 
+}
+
+function fillCanvas(object) {
+    if (!object) {
+        return false;
+    }
+
+    var changeX = game.width / object.width;
+    var changeY = game.height / object.height;
+
+    var scale = Math.max(changeX, changeY);
+
+    object.scale.x = scale;
+    object.scale.y = scale;
 }
 
 function render () {

@@ -1,0 +1,14 @@
+CACHE MANIFEST
+# v0.0.1
+
+NETWORK:
+*
+
+CACHE:
+phaser.min.js
+main.js
+respond.js
+assets/background.png
+assets/bagel_spritesheet.png
+assets/baguette_600.png
+assets/grass.png

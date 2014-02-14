@@ -156,18 +156,17 @@ function createBagel() {
     bagel.dead = false;
 
     bagel.die = function() {
-    if (bagel.dead) {
-        return false;
-    }
-    bagel.dead = true;
-    bagel.animations.stop('spin');
-    bagel.body.velocity.y = 0;
-    bagel.body.gravity.y = 200;
-    bagel.frame = 0;
+        if (bagel.dead) {
+            return false;
+        }
+        bagel.dead = true;
+        bagel.animations.stop('spin');
+        bagel.body.velocity.y = 0;
+        bagel.body.gravity.y = 200;
+        bagel.frame = 0;
 
-    gameOverText.visible = true;
-
-};
+        gameOverText.visible = true;
+    };
 }
 
 function fillCanvas(object) {

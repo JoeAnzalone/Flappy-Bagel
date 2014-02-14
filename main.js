@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-wrap', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game-wrap', { preload: preload, create: create, update: update });
 
 function preload () {
 
@@ -145,8 +145,4 @@ function fillCanvas(object) {
 
     object.scale.x = scale;
     object.scale.y = scale;
-}
-
-function render () {
-    game.debug.renderSpriteBody(breadsticks);
 }

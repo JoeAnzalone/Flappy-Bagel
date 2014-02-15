@@ -18,6 +18,7 @@ function preload () {
 
 var background;
 var xSpacing = 275; // Horizontal space between breadsticks
+var score = 0;
 function create () {
     respond(game);
 
@@ -86,6 +87,8 @@ function create () {
     game.input.onDown.add(function(){
         if (gameOverText.visible) {
             game.camera.x = 0;
+            score = 0;
+            scoreText.content = score;
             gameOverText.visible = false;
             bagel.destroy();
             createBagel();
@@ -101,6 +104,10 @@ function create () {
             bagel.body.velocity.y = -400;
         }
     });
+
+    scoreText = game.add.text(game.camera.width/2, game.camera.x + 100, '0');
+    scoreText.anchor.setTo(0.5, 0);
+    scoreText.fixedToCamera = true;
 
     gameOverText = game.add.text(game.camera.width/2, game.camera.height/2, 'You got killed!\nClick wherever to restart', {align: 'center'});
     gameOverText.visible = false;
@@ -136,6 +143,12 @@ function update() {
         if (breadstick.x + breadstick.width < game.camera.x) {
             // breadstick.x = game.camera.x + game.world.width + (i+1) * xSpacing;
             breadstick.x = game.camera.x + (breadsticks.length/2) * xSpacing;
+        }
+
+        if (bagel.x > breadstick.x && !breadstick.passed  ) {
+            breadstick.passed = true;
+            score += 0.5
+            scoreText.content = score;
         }
     }, this);
 

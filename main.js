@@ -19,6 +19,7 @@ function preload () {
 var background;
 var xSpacing = 275; // Horizontal space between breadsticks
 var score = 0;
+var gameOverText;
 function create () {
     respond(game);
 
@@ -52,17 +53,18 @@ function create () {
     createBagel();
 
     game.input.onDown.add(function(){
-        if (gameOverText.visible) {
+        if (typeof gameOverText !== "undefined" && gameOverText !== null) {
             game.camera.x = 0;
             score = 0;
             scoreText.content = score;
-            gameOverText.visible = false;
             breadsticks.destroy();
             createBreadsticks();
             bagel.destroy();
             createBagel();
             scoreText.destroy();
-            createScoreText()
+            createScoreText();
+            gameOverText.destroy();
+            gameOverText = null;
         }
 
         if (!bagel.dead && bagel.y > game.camera.y) {
@@ -78,10 +80,6 @@ function create () {
 
     createScoreText();
 
-    gameOverText = game.add.text(game.camera.width/2, game.camera.height/2, 'You got killed!\nClick wherever to restart', {align: 'center'});
-    gameOverText.visible = false;
-    gameOverText.anchor.setTo(0.5, 0.5);
-    gameOverText.fixedToCamera = true;
 }
 
 function update() {
@@ -147,7 +145,7 @@ function createBagel() {
         bagel.body.gravity.y = 200;
         bagel.frame = 0;
 
-        gameOverText.visible = true;
+        createGameOverText();
     };
 }
 
@@ -192,6 +190,12 @@ function createScoreText() {
     scoreText = game.add.text(game.camera.width/2, game.camera.x + 100, '0');
     scoreText.anchor.setTo(0.5, 0);
     scoreText.fixedToCamera = true;
+}
+
+function createGameOverText() {
+    gameOverText = game.add.text(game.camera.width/2, game.camera.height/2, 'You got killed!\nClick wherever to restart', {align: 'center'});
+    gameOverText.anchor.setTo(0.5, 0.5);
+    gameOverText.fixedToCamera = true;
 }
 
 function fillCanvas(object) {

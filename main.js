@@ -29,40 +29,7 @@ function create () {
 
     fillCanvas(background);
 
-    breadsticks = game.add.group();
-    for (var i = 0; i < 10; i++) {
-
-        // Vertical space between breadsticks
-        var ySpacing = 100;
-
-        var xPos = game.world.width + (i+1) * xSpacing;
-        var yPos = (game.world.height / 2) - 650;
-
-        yPos = yPos + (Math.random() * (100 - -200) + -200);
-
-        var topBreadstick = breadsticks.create(xPos, yPos, 'breadstick');
-        var bottomBreadstick = breadsticks.create(xPos, topBreadstick.y + ySpacing + topBreadstick.height, 'breadstick');
-
-        topBreadstick.body.immovable = true;
-        bottomBreadstick.body.immovable = true;
-
-        var breadstickPolygon = [
-            37, 20,
-            58, 10,
-            76, 17,
-            85, 35,
-            80, 563,
-            68, 584,
-            48, 583,
-            36, 572,
-            22, 528,
-            17, 482,
-            16, 90
-        ];
-
-        topBreadstick.body.setPolygon(breadstickPolygon);
-        bottomBreadstick.body.setPolygon(breadstickPolygon);
-    }
+    createBreadsticks();
 
     grassHit = game.add.sprite(0, game.world.height - 32);
     grassHit.width = game.world.width;
@@ -90,8 +57,12 @@ function create () {
             score = 0;
             scoreText.content = score;
             gameOverText.visible = false;
+            breadsticks.destroy();
+            createBreadsticks();
             bagel.destroy();
             createBagel();
+            scoreText.destroy();
+            createScoreText()
         }
 
         if (!bagel.dead && bagel.y > game.camera.y) {
@@ -105,9 +76,7 @@ function create () {
         }
     });
 
-    scoreText = game.add.text(game.camera.width/2, game.camera.x + 100, '0');
-    scoreText.anchor.setTo(0.5, 0);
-    scoreText.fixedToCamera = true;
+    createScoreText();
 
     gameOverText = game.add.text(game.camera.width/2, game.camera.height/2, 'You got killed!\nClick wherever to restart', {align: 'center'});
     gameOverText.visible = false;
@@ -180,6 +149,49 @@ function createBagel() {
 
         gameOverText.visible = true;
     };
+}
+
+function createBreadsticks() {
+    breadsticks = game.add.group();
+    for (var i = 0; i < 10; i++) {
+
+        // Vertical space between breadsticks
+        var ySpacing = 100;
+
+        var xPos = game.world.width + (i+1) * xSpacing;
+        var yPos = (game.world.height / 2) - 650;
+
+        yPos = yPos + (Math.random() * (100 - -200) + -200);
+
+        var topBreadstick = breadsticks.create(xPos, yPos, 'breadstick');
+        var bottomBreadstick = breadsticks.create(xPos, topBreadstick.y + ySpacing + topBreadstick.height, 'breadstick');
+
+        topBreadstick.body.immovable = true;
+        bottomBreadstick.body.immovable = true;
+
+        var breadstickPolygon = [
+            37, 20,
+            58, 10,
+            76, 17,
+            85, 35,
+            80, 563,
+            68, 584,
+            48, 583,
+            36, 572,
+            22, 528,
+            17, 482,
+            16, 90
+        ];
+
+        topBreadstick.body.setPolygon(breadstickPolygon);
+        bottomBreadstick.body.setPolygon(breadstickPolygon);
+    }
+}
+
+function createScoreText() {
+    scoreText = game.add.text(game.camera.width/2, game.camera.x + 100, '0');
+    scoreText.anchor.setTo(0.5, 0);
+    scoreText.fixedToCamera = true;
 }
 
 function fillCanvas(object) {

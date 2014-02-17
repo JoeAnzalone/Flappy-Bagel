@@ -200,7 +200,11 @@ function createScoreText() {
 }
 
 function createGameOverText() {
-    gameOverText = game.add.text(game.camera.width/2, game.camera.height/2, 'You got killed!\nClick wherever to restart', {align: 'center'});
+    var message = 'You got killed!\nClick wherever to restart';
+    if (highScore) {
+        message += '\nHigh score: ' + highScore;
+    }
+    gameOverText = game.add.text(game.camera.width/2, game.camera.height/2, message, {align: 'center'});
     gameOverText.anchor.setTo(0.5, 0.5);
     gameOverText.fixedToCamera = true;
 }

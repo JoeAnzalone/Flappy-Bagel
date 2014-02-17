@@ -19,6 +19,7 @@ function preload () {
 var background;
 var xSpacing = 275; // Horizontal space between breadsticks
 var score = 0;
+var highScore = getSavedData('highScore') ? getSavedData('highScore') : 0;
 var gameOverText;
 function create () {
     respond(game);
@@ -145,6 +146,12 @@ function createBagel() {
         bagel.body.gravity.y = 200;
         bagel.frame = 0;
 
+        if (score > highScore) {
+            highScore = score;
+            setSavedData('highScore', score);
+            console.log('New high score!: ' + highScore);
+        }
+
         createGameOverText();
     };
 }
@@ -210,4 +217,18 @@ function fillCanvas(object) {
 
     object.scale.x = scale;
     object.scale.y = scale;
+}
+
+function setSavedData(key, value) {
+    return localStorage['flappy_bagel_'+key] = JSON.stringify(value);
+}
+
+function getSavedData(key) {
+    rawValue = localStorage['flappy_bagel_'+key];
+
+    if (typeof rawValue !== 'string') {
+        return rawValue;
+    }
+
+    return JSON.parse(rawValue);
 }

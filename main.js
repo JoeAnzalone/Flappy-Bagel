@@ -112,7 +112,7 @@ function update() {
             breadstick.x = game.camera.x + (breadsticks.length/2) * xSpacing;
         }
 
-        if (bagel.x > breadstick.x && !breadstick.passed  ) {
+        if (bagel.topLeft.x + 32 > breadstick.topRight.x && !breadstick.passed  ) {
             breadstick.passed = true;
             score += 0.5
             scoreText.content = score;
@@ -123,7 +123,7 @@ function update() {
 
 function createBagel() {
     var bagelStart = {};
-    bagelStart.x = 32;
+    bagelStart.x = 64;
     bagelStart.y = game.world.height / 2 - 64;
 
     bagel = game.add.sprite(bagelStart.x, bagelStart.y, 'bagel');
